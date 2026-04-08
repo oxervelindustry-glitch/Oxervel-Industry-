@@ -3,564 +3,500 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Finora | Customer Dashboard</title>
+<title>Oxervel Industry | My Account</title>
 <style>
-* {
+  * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
-}
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
 
-body {
-    background: #f5efe8;
+  body {
+    background: #f5f0ea;
+    min-height: 100vh;
+  }
+
+  .icon {
+    width: 18px;
+    height: 18px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .login-container {
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
-}
-
-/* Login Card */
-.login-wrapper {
-    display: flex;
+    align-items: center;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: #f7f3ea;
-    padding: 1.5rem;
-}
+    background: #f5f0ea;
+    padding: 20px;
+  }
 
-.account-card {
-    width: 100%;
-    max-width: 380px;
-    background: #fffaf5;
-    border-radius: 24px;
-    padding: 30px 24px;
+  .login-card {
+    background: white;
+    border-radius: 28px;
+    padding: 36px 28px;
     text-align: center;
-    border: 1px solid #e2d5c4;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
-}
-
-.logo img {
-    width: 120px;
-    margin-bottom: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.profile {
-    display: none;
-    margin-top: 20px;
-}
-
-.profile img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 3px solid #5c3e2b;
-    object-fit: cover;
-    margin-bottom: 10px;
-}
-
-.name {
-    font-weight: 700;
-    color: #5c3e2b;
-}
-
-.email {
-    font-size: 13px;
-    color: #8b694a;
-    margin-bottom: 20px;
-}
-
-.btn {
+    max-width: 360px;
     width: 100%;
-    padding: 12px;
-    border-radius: 50px;
-    border: 2px solid #5c3e2b;
-    background: #f7f3ea;
+    border: 1px solid #e5dcd0;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+  }
+
+  .login-card .logo {
+    width: 80px;
+    margin-bottom: 20px;
+  }
+
+  .login-card h2 {
+    color: #4a3422;
+    font-size: 22px;
     font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  .login-card p {
+    color: #8b7358;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .google-btn {
+    background: white;
+    border: 1.5px solid #e0d5c8;
+    border-radius: 48px;
+    padding: 10px 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
     cursor: pointer;
-    margin-top: 15px;
-    transition: 0.2s;
-}
-
-.btn:hover {
-    background: #e9dfcd;
-}
-
-.logout {
-    background: #5c3e2b;
-    color: white;
-    display: none;
-}
-
-.logout:hover {
-    background: #3e2a1c;
-}
-
-.title {
-    color: #5c3e2b;
-    margin-top: 10px;
-}
-
-/* Dashboard */
-.dashboard-container {
-    display: none;
-    flex-direction: column;
-    min-height: 100vh;
-    background: #f9f6f0;
-}
-
-/* Navbar */
-.navbar {
-    background: #ffffff;
-    padding: 1rem 2rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    border-bottom: 1px solid #e9dfd2;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-}
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.logo-area img {
-    height: 44px;
-    width: auto;
-    object-fit: contain;
-}
-
-.brand-text {
-    font-weight: 700;
-    font-size: 1.4rem;
-    letter-spacing: -0.3px;
-    color: #5c3e2b;
-}
-
-.nav-links {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.outline-btn {
-    background: transparent;
-    border: 1.5px solid #c9b6a2;
-    border-radius: 40px;
-    padding: 8px 20px;
+    font-size: 13px;
     font-weight: 500;
-    font-size: 0.9rem;
-    color: #5c3e2b;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    display: inline-flex;
+    color: #4a3422;
+    transition: all 0.2s;
+  }
+
+  .google-btn:hover {
+    background: #faf7f2;
+    border-color: #c9b9a6;
+  }
+
+  .dashboard {
+    display: none;
+    min-height: 100vh;
+    background: #f5f0ea;
+  }
+
+  .navbar {
+    background: white;
+    padding: 12px 24px;
+    display: flex;
+    justify-content: space-between;
     align-items: center;
-    gap: 8px;
-}
+    flex-wrap: wrap;
+    gap: 12px;
+    border-bottom: 1px solid #e5dcd0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
 
-.outline-btn:hover {
-    background: #f3ede6;
-    border-color: #a8896c;
-    transform: translateY(-1px);
-}
-
-.solid-btn {
-    background: #5c3e2b;
-    color: white;
-    border: none;
-}
-
-.solid-btn:hover {
-    background: #3e2a1c;
-}
-
-.user-badge {
+  .logo-area {
     display: flex;
     align-items: center;
     gap: 10px;
-    background: #f3ede6;
-    border-radius: 60px;
-    padding: 5px 15px 5px 8px;
-    border: 1px solid #e2d5c4;
-}
+  }
 
-.user-avatar-small {
-    width: 34px;
+  .logo-area img {
     height: 34px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ffffff;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-}
+  }
 
-.user-name-small {
+  .logo-area span {
     font-weight: 600;
-    font-size: 0.85rem;
-    color: #3e2a1c;
-}
+    font-size: 18px;
+    color: #4a3422;
+  }
 
-/* Menu Dropdown - Fixed */
-.menu-dropdown {
-    position: relative;
-    display: inline-block;
-}
+  .nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 
-.menu-icon-btn {
-    background: transparent;
-    border: 1.5px solid #c9b6a2;
+  .shop-btn {
+    background: #4a3422;
+    color: white;
+    border: none;
+    padding: 6px 16px;
     border-radius: 40px;
-    padding: 8px 20px;
+    font-size: 12px;
     font-weight: 500;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s;
+  }
+
+  .shop-btn:hover {
+    background: #3a281a;
+  }
+
+  .user-info {
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #5c3e2b;
-    font-size: 0.9rem;
-}
+    background: #f5f0ea;
+    padding: 4px 12px 4px 6px;
+    border-radius: 40px;
+  }
 
-.dropdown-content {
+  .user-info img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .user-info span {
+    font-size: 12px;
+    font-weight: 500;
+    color: #4a3422;
+  }
+
+  .menu-btn {
+    background: transparent;
+    border: 1.5px solid #e0d5c8;
+    border-radius: 40px;
+    padding: 6px 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #4a3422;
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .menu-btn:hover {
+    background: #faf7f2;
+  }
+
+  .dropdown {
+    position: relative;
+  }
+
+  .dropdown-menu {
     display: none;
     position: absolute;
     right: 0;
-    top: 48px;
-    background-color: white;
-    min-width: 180px;
-    border-radius: 20px;
-    box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-    border: 1px solid #ede0d2;
-    z-index: 100;
+    top: 42px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border: 1px solid #e5dcd0;
+    min-width: 140px;
+    z-index: 200;
     overflow: hidden;
-}
+  }
 
-.dropdown-content.show {
+  .dropdown-menu.show {
     display: block;
-}
+  }
 
-.dropdown-content a {
-    color: #4c3724;
-    padding: 14px 20px;
-    text-decoration: none;
+  .dropdown-menu a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: 0.1s;
+    gap: 10px;
+    padding: 10px 16px;
+    color: #4a3422;
+    font-size: 12px;
     cursor: pointer;
-    border-bottom: 1px solid #f5efe8;
-}
+    border-bottom: 1px solid #f0eae2;
+    transition: background 0.15s;
+  }
 
-.dropdown-content a:last-child {
+  .dropdown-menu a:last-child {
     border-bottom: none;
-}
+  }
 
-.dropdown-content a:hover {
-    background-color: #f8f0e8;
-}
+  .dropdown-menu a:hover {
+    background: #faf7f2;
+  }
 
-/* Main content */
-.main-content {
-    max-width: 1280px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-    width: 100%;
-    flex: 1;
-}
+  .main-content {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 28px 20px;
+  }
 
-.dashboard-header {
-    margin-bottom: 2rem;
-}
+  .welcome-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    border: 1px solid #e5dcd0;
+  }
 
-.dashboard-header h1 {
-    font-size: 1.9rem;
-    font-weight: 700;
-    color: #2c1d12;
-    letter-spacing: -0.02em;
-}
-
-.dashboard-header p {
-    color: #7f6242;
-    margin-top: 6px;
-    font-size: 0.95rem;
-}
-
-/* Orders section */
-.orders-section {
-    background: #ffffff;
-    border-radius: 28px;
-    padding: 1.8rem 1.8rem;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.03);
-    border: 1px solid #ece2d8;
-}
-
-.section-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1.8rem;
-    border-left: 4px solid #c9aa8b;
-    padding-left: 1rem;
-}
-
-.section-title h2 {
-    font-size: 1.5rem;
+  .welcome-card h1 {
+    font-size: 22px;
     font-weight: 600;
-    color: #3c2a1f;
-}
+    color: #4a3422;
+    margin-bottom: 6px;
+  }
 
-.order-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-}
+  .welcome-card p {
+    font-size: 13px;
+    color: #8b7358;
+  }
 
-.order-card {
-    background: #fefaf6;
-    border-radius: 20px;
-    border: 1px solid #ede3d7;
-    padding: 1.2rem 1.5rem;
-    transition: all 0.2s;
+  .orders-card {
+    background: white;
+    border-radius: 24px;
+    padding: 24px;
+    border: 1px solid #e5dcd0;
+  }
+
+  .orders-header {
     display: flex;
-    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
-}
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #efe8df;
+  }
 
-.order-card:hover {
-    background: #fffcf9;
-    border-color: #d6c5b4;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
-}
+  .orders-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #4a3422;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
-.order-info {
+  .orders-header span {
+    background: #f5f0ea;
+    padding: 2px 10px;
+    border-radius: 30px;
+    font-size: 11px;
+    color: #4a3422;
+  }
+
+  .order-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .order-item {
+    background: #fefcf9;
+    border-radius: 18px;
+    border: 1px solid #ede6dc;
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    transition: all 0.2s;
+  }
+
+  .order-item:hover {
+    background: white;
+    border-color: #d9cebf;
+  }
+
+  .order-info {
     flex: 2;
-    min-width: 180px;
-}
+  }
 
-.order-id {
-    font-weight: 700;
-    color: #4b3621;
-    font-size: 1rem;
+  .order-id {
+    font-weight: 600;
+    color: #4a3422;
+    font-size: 14px;
     margin-bottom: 6px;
-}
+  }
 
-.order-details {
+  .order-meta {
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-    font-size: 0.85rem;
-    color: #7e6953;
-    margin-top: 6px;
-}
+    gap: 8px;
+    font-size: 11px;
+    color: #8b7358;
+  }
 
-.order-details span {
-    background: #f2ebe3;
+  .order-meta span {
+    background: #f5f0ea;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .order-status {
     padding: 4px 12px;
     border-radius: 30px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-}
+    font-size: 11px;
+    font-weight: 500;
+  }
 
-.order-status {
-    font-weight: 600;
-    background: #e9dfd2;
-    padding: 6px 14px;
-    border-radius: 40px;
-    font-size: 0.8rem;
-    color: #4f3a28;
-}
-
-.status-delivered {
-    background: #e0f0e6;
-    color: #1f6e43;
-}
-
-.status-processing {
-    background: #fff1df;
+  .status-processing {
+    background: #fff1e6;
     color: #b45f1b;
-}
+  }
 
-.order-total {
-    font-weight: 800;
-    font-size: 1.2rem;
-    color: #2f4b3c;
-    white-space: nowrap;
-}
+  .status-delivered {
+    background: #e8f3ed;
+    color: #2a7a4b;
+  }
 
-.empty-orders {
+  .order-amount {
+    font-weight: 700;
+    font-size: 16px;
+    color: #4a3422;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  .empty-orders {
     text-align: center;
-    padding: 3rem 1.5rem;
-    background: #fefaf5;
-    border-radius: 28px;
-    color: #a8896c;
-    border: 1px dashed #e0d2c2;
-}
+    padding: 48px 20px;
+    color: #b8a48c;
+  }
 
-.empty-icon {
-    width: 56px;
-    height: 56px;
-    margin: 0 auto 16px auto;
-    border: 1.5px solid #d4c2b0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #bc9a7a;
-    font-size: 24px;
-    font-weight: 400;
-}
+  .empty-icon {
+    width: 48px;
+    height: 48px;
+    margin: 0 auto 12px;
+    stroke: #d4c2b0;
+    stroke-width: 1.2;
+  }
 
-.empty-orders p {
-    font-size: 0.95rem;
-    margin-bottom: 20px;
-    color: #9b7c60;
-}
-
-footer {
+  footer {
     text-align: center;
-    padding: 1.5rem;
-    font-size: 0.75rem;
-    color: #b89b7e;
-    border-top: 1px solid #e9dfd2;
-    background: #fefbf7;
-}
+    padding: 20px;
+    color: #b8a48c;
+    font-size: 10px;
+    border-top: 1px solid #e5dcd0;
+    margin-top: 28px;
+  }
 
-@media (max-width: 680px) {
-    .navbar {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 1rem;
-    }
-    .nav-links {
-        justify-content: space-between;
-        flex-wrap: wrap;
-    }
-    .order-card {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-    .order-total {
-        align-self: flex-end;
-    }
-    .main-content {
-        padding: 0 1rem;
-    }
-    .orders-section {
-        padding: 1.2rem;
-    }
-    .section-title h2 {
-        font-size: 1.3rem;
-    }
-    .dashboard-header h1 {
-        font-size: 1.6rem;
-    }
-}
+  @media (max-width: 640px) {
+    .navbar { flex-direction: column; align-items: stretch; }
+    .nav-controls { justify-content: space-between; }
+    .order-item { flex-direction: column; align-items: stretch; }
+    .order-amount { text-align: left; }
+    .welcome-card h1 { font-size: 18px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- LOGIN SECTION -->
-<div id="loginSection" class="login-wrapper">
-    <div class="account-card">
-        <div class="logo">
-            <img src="logo.jpg" alt="Finora" onerror="this.src='https://placehold.co/120x60?text=Finora'">
-        </div>
-        <h2 class="title" id="title">Welcome</h2>
-        <button class="btn" id="loginBtn">Continue with Google</button>
-        <div class="profile" id="profileBox">
-            <img id="userPic" alt="profile">
-            <div class="name" id="userName"></div>
-            <div class="email" id="userEmail"></div>
-        </div>
-        <button class="btn logout" id="logoutBtn">Logout</button>
-    </div>
+<!-- Login Section -->
+<div id="loginSection" class="login-container">
+  <div class="login-card">
+    <img src="logo.jpg" class="logo" alt="Oxervel Industry" onerror="this.src='https://placehold.co/80x50?text=OX'">
+    <h2>Welcome</h2>
+    <p>Sign in to view your orders</p>
+    <button class="google-btn" id="loginBtn">
+      <svg width="20" height="20" viewBox="0 0 24 24">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Continue with Google
+    </button>
+  </div>
 </div>
 
-<!-- DASHBOARD -->
-<div id="dashboardApp" class="dashboard-container">
-    <nav class="navbar">
-        <div class="logo-area">
-            <img src="logo.jpg" alt="Finora" onerror="this.src='https://placehold.co/120x60?text=Finora'">
-            <span class="brand-text">Finora</span>
-        </div>
-        <div class="nav-links">
-            <div class="menu-dropdown">
-                <button class="menu-icon-btn" id="menuToggleBtn">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
-                    Menu
-                </button>
-                <div class="dropdown-content" id="dropdownMenu">
-                    <a id="settingsOption">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <circle cx="12" cy="12" r="3"></circle>
-                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
-                        </svg>
-                        Settings
-                    </a>
-                    <a id="shopOption">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <path d="M16 10a4 4 0 0 1-8 0"></path>
-                        </svg>
-                        Shop
-                    </a>
-                    <a id="dashboardLogoutOption">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                            <polyline points="16 17 21 12 16 7"></polyline>
-                            <line x1="21" y1="12" x2="9" y2="12"></line>
-                        </svg>
-                        Logout
-                    </a>
-                </div>
-            </div>
-            <button class="outline-btn solid-btn" id="shopNavBtn">Shop Now</button>
-            <div class="user-badge">
-                <img id="navUserPic" class="user-avatar-small" alt="avatar">
-                <span class="user-name-small" id="navUserName"></span>
-            </div>
-        </div>
-    </nav>
-
-    <div class="main-content">
-        <div class="dashboard-header">
-            <h1>My Orders</h1>
-            <p>View your booking history and order details</p>
-        </div>
-
-        <div class="orders-section">
-            <div class="section-title">
-                <h2>Order History</h2>
-            </div>
-            <div id="ordersContainer" class="order-list">
-                <div class="empty-orders" id="emptyOrdersMsg">
-                    <div class="empty-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
-                            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
-                        </svg>
-                    </div>
-                    <p>No orders placed yet. Complete a booking and it will appear here.</p>
-                </div>
-            </div>
-        </div>
+<!-- Dashboard -->
+<div id="dashboard" class="dashboard">
+  <nav class="navbar">
+    <div class="logo-area">
+      <img src="logo.jpg" alt="Oxervel Industry" onerror="this.src='https://placehold.co/40x40?text=OX'">
+      <span>Oxervel Industry</span>
     </div>
-    <footer>© Finora — Secure customer dashboard</footer>
+    <div class="nav-controls">
+      <button class="shop-btn" id="shopBtn">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        Shop
+      </button>
+      <div class="user-info" id="userInfo">
+        <img id="userAvatar" src="" alt="">
+        <span id="userName">Customer</span>
+      </div>
+      <div class="dropdown">
+        <button class="menu-btn" id="menuBtn">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+          Menu
+        </button>
+        <div class="dropdown-menu" id="dropdownMenu">
+          <a id="settingsBtn">
+            <svg class="icon" viewBox="0 0 24 24">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+            Settings
+          </a>
+          <a id="logoutBtn">
+            <svg class="icon" viewBox="0 0 24 24">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            Logout
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-content">
+    <div class="welcome-card">
+      <h1 id="welcomeName">My Orders</h1>
+      <p>View and track your order history</p>
+    </div>
+
+    <div class="orders-card">
+      <div class="orders-header">
+        <h2>
+          <svg class="icon" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+          Recent Orders
+        </h2>
+        <span id="orderCount">0 orders</span>
+      </div>
+      <div id="ordersList" class="order-list">
+        <div class="empty-orders">
+          <svg class="empty-icon" viewBox="0 0 24 24">
+            <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+            <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+          </svg>
+          <p>No orders yet</p>
+          <p style="font-size:11px; margin-top:6px;">Complete a booking to see it here</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2026 Oxervel Industry — Customer Dashboard</footer>
 </div>
 
 <script type="module">
@@ -580,268 +516,122 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// DOM Elements
-const loginBtn = document.getElementById("loginBtn");
-const logoutBtn = document.getElementById("logoutBtn");
-const profileBox = document.getElementById("profileBox");
-const titleEl = document.getElementById("title");
-const loginSection = document.getElementById("loginSection");
-const dashboardApp = document.getElementById("dashboardApp");
-const navUserPic = document.getElementById("navUserPic");
-const navUserNameSpan = document.getElementById("navUserName");
-const ordersContainer = document.getElementById("ordersContainer");
-const emptyMsgDiv = document.getElementById("emptyOrdersMsg");
+const loginSection = document.getElementById('loginSection');
+const dashboard = document.getElementById('dashboard');
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const shopBtn = document.getElementById('shopBtn');
+const settingsBtn = document.getElementById('settingsBtn');
+const menuBtn = document.getElementById('menuBtn');
+const dropdownMenu = document.getElementById('dropdownMenu');
 
-// Set login flag
 function setLoginFlag(user) {
-    if (user) {
-        localStorage.setItem('finora_user_logged_in', 'true');
-        localStorage.setItem('finora_user_email', user.email);
-        localStorage.setItem('finora_user_name', user.displayName);
-    } else {
-        localStorage.setItem('finora_user_logged_in', 'false');
-        localStorage.removeItem('finora_user_email');
-        localStorage.removeItem('finora_user_name');
-    }
+  localStorage.setItem('finora_user_logged_in', user ? 'true' : 'false');
 }
 
-// Order storage functions
-function getUserOrdersKey(uid) {
-    return `finora_orders_${uid}`;
+function getUserOrdersKey(uid) { return `finora_orders_${uid}`; }
+
+function loadOrders(uid) {
+  const stored = localStorage.getItem(getUserOrdersKey(uid));
+  return stored ? JSON.parse(stored) : [];
 }
 
-function loadUserOrders(uid) {
-    const key = getUserOrdersKey(uid);
-    const stored = localStorage.getItem(key);
-    return stored ? JSON.parse(stored) : [];
-}
-
-function saveUserOrders(uid, orders) {
-    const key = getUserOrdersKey(uid);
-    localStorage.setItem(key, JSON.stringify(orders));
+function saveOrders(uid, orders) {
+  localStorage.setItem(getUserOrdersKey(uid), JSON.stringify(orders));
 }
 
 function renderOrders(uid) {
-    if (!uid) return;
-    const orders = loadUserOrders(uid);
-    
-    if (orders.length === 0) {
-        if (emptyMsgDiv) emptyMsgDiv.style.display = "block";
-        ordersContainer.innerHTML = '';
-        ordersContainer.appendChild(emptyMsgDiv);
-        return;
-    }
-    
-    if (emptyMsgDiv) emptyMsgDiv.style.display = "none";
-    ordersContainer.innerHTML = '';
-    orders.sort((a,b) => new Date(b.date) - new Date(a.date));
-    
-    orders.forEach(order => {
-        const orderCard = document.createElement("div");
-        orderCard.className = "order-card";
-        let statusClass = order.status === 'Delivered' ? 'status-delivered' : (order.status === 'Processing' ? 'status-processing' : '');
-        orderCard.innerHTML = `
-            <div class="order-info">
-                <div class="order-id">${escapeHtml(order.orderNumber || order.id)}</div>
-                <div class="order-details">
-                    <span>${new Date(order.date).toLocaleDateString()}</span>
-                    <span>${escapeHtml(order.itemsSummary || order.productName || 'Order items')}</span>
-                </div>
-                <div class="order-status ${statusClass}">${escapeHtml(order.status || 'Confirmed')}</div>
-            </div>
-            <div class="order-total">₹${order.total.toFixed(2)}</div>
-        `;
-        ordersContainer.appendChild(orderCard);
-    });
+  const orders = loadOrders(uid);
+  const container = document.getElementById('ordersList');
+  const countSpan = document.getElementById('orderCount');
+  
+  if (!container) return;
+  
+  if (orders.length === 0) {
+    container.innerHTML = `<div class="empty-orders"><svg class="empty-icon" viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg><p>No orders yet</p><p style="font-size:11px; margin-top:6px;">Complete a booking to see it here</p></div>`;
+    countSpan.innerText = '0 orders';
+    return;
+  }
+  
+  countSpan.innerText = `${orders.length} order${orders.length > 1 ? 's' : ''}`;
+  container.innerHTML = orders.sort((a,b) => new Date(b.date) - new Date(a.date)).map(order => `
+    <div class="order-item">
+      <div class="order-info">
+        <div class="order-id">${escapeHtml(order.orderNumber)}</div>
+        <div class="order-meta">
+          <span>${new Date(order.date).toLocaleDateString()}</span>
+          <span>${escapeHtml(order.productName)}</span>
+          <span>${escapeHtml(order.paymentMethod)}</span>
+        </div>
+      </div>
+      <div class="order-status ${order.status === 'Delivered' ? 'status-delivered' : 'status-processing'}">${order.status === 'Delivered' ? 'Delivered' : 'Processing'}</div>
+      <div class="order-amount">₹${order.total.toFixed(2)}</div>
+    </div>
+  `).join('');
 }
 
 function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
+  if (!str) return '';
+  return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
 }
 
 function addOrderToUser(uid, orderDetails) {
-    const orders = loadUserOrders(uid);
-    const newOrder = {
-        id: orderDetails.id || `ORD-${Date.now()}`,
-        orderNumber: orderDetails.orderNumber || `#FIN${Math.floor(Math.random() * 100000)}`,
-        date: orderDetails.date || new Date().toISOString(),
-        total: Number(orderDetails.total) || 0,
-        status: orderDetails.status || "Processing",
-        itemsSummary: orderDetails.itemsSummary || orderDetails.productName || "Finora Floor Cleaner",
-        productName: orderDetails.productName || "Finora Floor Cleaner",
-        paymentMethod: orderDetails.paymentMethod || "Not specified",
-        address: orderDetails.address || "Not specified"
-    };
-    orders.unshift(newOrder);
-    saveUserOrders(uid, orders);
-    renderOrders(uid);
-    return true;
+  const orders = loadOrders(uid);
+  orders.unshift({
+    id: orderDetails.id || Date.now(),
+    orderNumber: orderDetails.orderNumber || `OX-${Date.now()}`,
+    date: orderDetails.date || new Date().toISOString(),
+    total: Number(orderDetails.total) || 0,
+    status: orderDetails.status || "Processing",
+    productName: orderDetails.productName || "Floor Cleaner",
+    paymentMethod: orderDetails.paymentMethod || "Not specified"
+  });
+  saveOrders(uid, orders);
+  renderOrders(uid);
+  return true;
 }
 
-function checkForPendingOrder(user) {
-    const pendingOrder = localStorage.getItem('completedOrder');
-    if (pendingOrder && user) {
-        try {
-            const orderData = JSON.parse(pendingOrder);
-            addOrderToUser(user.uid, orderData);
-            localStorage.removeItem('completedOrder');
-            showNotification("New order added successfully!");
-        } catch(e) {}
-    }
-}
-
-function showNotification(message) {
-    const notif = document.createElement("div");
-    notif.innerText = message;
-    notif.style.position = "fixed";
-    notif.style.bottom = "24px";
-    notif.style.right = "24px";
-    notif.style.background = "#5c3e2b";
-    notif.style.color = "white";
-    notif.style.padding = "10px 20px";
-    notif.style.borderRadius = "40px";
-    notif.style.fontSize = "0.85rem";
-    notif.style.zIndex = "999";
-    notif.style.boxShadow = "0 4px 12px rgba(0,0,0,0.1)";
-    document.body.appendChild(notif);
-    setTimeout(() => notif.remove(), 3000);
+function checkCompletedOrder(user) {
+  const completed = localStorage.getItem('completedOrder');
+  if (completed && user) {
+    try { addOrderToUser(user.uid, JSON.parse(completed)); localStorage.removeItem('completedOrder'); } catch(e) {}
+  }
 }
 
 window.FinoraAPI = {
-    addOrder: (order) => {
-        const currentUser = auth.currentUser;
-        if (currentUser && currentUser.uid) {
-            return addOrderToUser(currentUser.uid, order);
-        } else {
-            localStorage.setItem('pendingOrderForLater', JSON.stringify(order));
-            return false;
-        }
-    }
+  addOrder: (order) => {
+    const user = auth.currentUser;
+    if (user && user.uid) return addOrderToUser(user.uid, order);
+    localStorage.setItem('pendingOrderForLater', JSON.stringify(order));
+    return false;
+  }
 };
 
-function onUserSignedIn(user) {
-    loginSection.style.display = "none";
-    dashboardApp.style.display = "flex";
-    
-    if (navUserPic) navUserPic.src = user.photoURL || `https://ui-avatars.com/api/?background=5c3e2b&color=fff&name=${encodeURIComponent(user.displayName || 'User')}`;
-    if (navUserNameSpan) navUserNameSpan.innerText = user.displayName?.split(' ')[0] || "Customer";
-    
-    setLoginFlag(user);
-    renderOrders(user.uid);
-    checkForPendingOrder(user);
-    
-    const pendingOrderLater = localStorage.getItem('pendingOrderForLater');
-    if (pendingOrderLater) {
-        try {
-            const orderData = JSON.parse(pendingOrderLater);
-            addOrderToUser(user.uid, orderData);
-            localStorage.removeItem('pendingOrderForLater');
-        } catch(e) {}
-    }
-    
-    // Check for redirect after login
-    const urlParams = new URLSearchParams(window.location.search);
-    const redirectTo = urlParams.get('redirect');
-    if (redirectTo === 'checkout') {
-        const pendingProduct = localStorage.getItem('pendingOrder');
-        if (pendingProduct) {
-            window.location.href = 'order.html';
-        }
-    }
+function onLogin(user) {
+  loginSection.style.display = 'none';
+  dashboard.style.display = 'block';
+  setLoginFlag(user);
+  document.getElementById('userAvatar').src = user.photoURL || `https://ui-avatars.com/api/?background=4a3422&color=fff&name=${user.displayName?.[0] || 'U'}`;
+  document.getElementById('userName').innerText = user.displayName?.split(' ')[0] || 'Customer';
+  document.getElementById('welcomeName').innerHTML = `Hello, ${user.displayName?.split(' ')[0] || 'Customer'}`;
+  renderOrders(user.uid);
+  checkCompletedOrder(user);
 }
 
-function onUserSignedOut() {
-    loginSection.style.display = "flex";
-    dashboardApp.style.display = "none";
-    setLoginFlag(null);
-    
-    const userNameEl = document.getElementById("userName");
-    const userEmailEl = document.getElementById("userEmail");
-    const userPicEl = document.getElementById("userPic");
-    if (userNameEl) userNameEl.innerText = "";
-    if (userEmailEl) userEmailEl.innerText = "";
-    if (userPicEl) userPicEl.src = "";
-    if (profileBox) profileBox.style.display = "none";
-    if (logoutBtn) logoutBtn.style.display = "none";
-    if (loginBtn) loginBtn.style.display = "block";
-    if (titleEl) titleEl.innerText = "Welcome";
+function onLogout() {
+  loginSection.style.display = 'flex';
+  dashboard.style.display = 'none';
+  setLoginFlag(null);
 }
 
-// Firebase Auth handlers
-loginBtn.onclick = () => {
-    signInWithPopup(auth, provider).catch(err => alert("Login error: " + err.message));
-};
+loginBtn.onclick = () => signInWithPopup(auth, provider).catch(err => alert('Login failed: ' + err.message));
+shopBtn.onclick = () => window.location.href = 'index.html';
+settingsBtn.onclick = () => alert('Settings');
+logoutBtn.onclick = () => signOut(auth);
+menuBtn.onclick = (e) => { e.stopPropagation(); dropdownMenu.classList.toggle('show'); };
+document.addEventListener('click', () => dropdownMenu.classList.remove('show'));
 
-logoutBtn.onclick = () => {
-    signOut(auth);
-};
-
-function performLogout() {
-    signOut(auth);
-}
-
-// Menu Dropdown - Fixed
-function attachDashboardEvents() {
-    const menuToggle = document.getElementById("menuToggleBtn");
-    const dropdown = document.getElementById("dropdownMenu");
-    
-    if (menuToggle) {
-        menuToggle.onclick = (e) => {
-            e.stopPropagation();
-            dropdown.classList.toggle("show");
-        };
-        
-        // Close dropdown when clicking outside
-        window.addEventListener("click", function(e) {
-            if (menuToggle && !menuToggle.contains(e.target) && dropdown) {
-                dropdown.classList.remove("show");
-            }
-        });
-    }
-    
-    const settingsOpt = document.getElementById("settingsOption");
-    if (settingsOpt) {
-        settingsOpt.onclick = () => {
-            alert("Settings panel: manage notifications and preferences.");
-            dropdown.classList.remove("show");
-        };
-    }
-    
-    const shopOpt = document.getElementById("shopOption");
-    const shopNavBtn = document.getElementById("shopNavBtn");
-    const goToShop = () => {
-        window.location.href = "index.html";
-    };
-    if (shopOpt) shopOpt.onclick = () => { goToShop(); dropdown.classList.remove("show"); };
-    if (shopNavBtn) shopNavBtn.onclick = () => { goToShop(); };
-    
-    const dashboardLogout = document.getElementById("dashboardLogoutOption");
-    if (dashboardLogout) dashboardLogout.onclick = () => { performLogout(); dropdown.classList.remove("show"); };
-}
-
-// Auth state listener
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        if (document.getElementById("userName")) document.getElementById("userName").innerText = user.displayName;
-        if (document.getElementById("userEmail")) document.getElementById("userEmail").innerText = user.email;
-        if (document.getElementById("userPic")) document.getElementById("userPic").src = user.photoURL;
-        if (profileBox) profileBox.style.display = "block";
-        if (logoutBtn) logoutBtn.style.display = "block";
-        if (loginBtn) loginBtn.style.display = "none";
-        if (titleEl) titleEl.innerText = "My Account";
-        
-        onUserSignedIn(user);
-        attachDashboardEvents();
-    } else {
-        onUserSignedOut();
-    }
-});
+onAuthStateChanged(auth, (user) => user ? onLogin(user) : onLogout());
 </script>
 </body>
-</html>
+        </html>
