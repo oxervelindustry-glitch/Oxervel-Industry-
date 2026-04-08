@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title>Finora | Order Page – Floor Cleaner</title>
+  <title>Oxervel | Order Page – Floor Cleaner</title>
   <style>
     * {
       margin: 0;
@@ -16,14 +16,12 @@
       background-color: #f7f3ea;
     }
 
-    /* Main container */
     .order-page {
       max-width: 1280px;
       margin: 0 auto;
       padding: 32px 24px 80px;
     }
 
-    /* DESKTOP: Two column grid for product area */
     .product-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -41,7 +39,6 @@
       top: 32px;
     }
 
-    /* 1.1 aspect ratio image slider */
     .slider-frame {
       position: relative;
       width: 100%;
@@ -94,7 +91,6 @@
       border-radius: 12px;
     }
 
-    /* Product details */
     .product-details {
       background: transparent;
       padding: 0;
@@ -203,7 +199,6 @@
       stroke: white;
     }
 
-    /* How to order */
     .how-to-order {
       background: #fffcf7;
       padding: 24px 28px;
@@ -241,7 +236,6 @@
       font-size: 10px;
     }
 
-    /* Video section */
     .video-section {
       margin: 56px 0 64px;
     }
@@ -261,7 +255,6 @@
       display: block;
     }
 
-    /* ========== REVIEW SECTION - FULL WIDTH, EDGE TO EDGE ========== */
     .reviews-carousel {
       width: 100%;
       margin: 48px 0 30px;
@@ -342,7 +335,6 @@
       background: #f7f3ea;
     }
 
-    /* Login Required Modal */
     .login-required-modal {
       display: none;
       position: fixed;
@@ -442,25 +434,22 @@
 <body>
 <div class="order-page">
 
-  <!-- Two column grid layout -->
   <div class="product-grid">
-    <!-- Left Column: Image Slider -->
     <div class="image-slider-section">
       <div class="slider-frame" id="sliderFrame">
         <div class="swipe-slider" id="swipeSlider">
-          <div class="slider-img"><img src="https://placehold.co/900x990/f7f3ea/5c3e2b?text=Finora+Rose" alt="Rose Cleaner"></div>
-          <div class="slider-img"><img src="https://placehold.co/900x990/e9dfcd/5c3e2b?text=Jasmine+Essence" alt="Jasmine Cleaner"></div>
-          <div class="slider-img"><img src="https://placehold.co/900x990/dacbb6/5c3e2b?text=Black+Charcoal" alt="Black Floor Cleaner"></div>
-          <div class="slider-img"><img src="https://placehold.co/900x990/fff2e4/5c3e2b?text=White+Shine" alt="White Floor Cleaner"></div>
+          <div class="slider-img"><img src="https://placehold.co/900x990/f7f3ea/5c3e2b?text=Oxervel+Rose" alt="Rose Cleaner"></div>
+          <div class="slider-img"><img src="https://placehold.co/900x990/e9dfcd/5c3e2b?text=Oxervel+Jasmine" alt="Jasmine Cleaner"></div>
+          <div class="slider-img"><img src="https://placehold.co/900x990/dacbb6/5c3e2b?text=Oxervel+Black" alt="Black Floor Cleaner"></div>
+          <div class="slider-img"><img src="https://placehold.co/900x990/fff2e4/5c3e2b?text=Oxervel+White" alt="White Floor Cleaner"></div>
         </div>
       </div>
       <div class="slider-dots" id="sliderDots"></div>
     </div>
 
-    <!-- Right Column: Product Info -->
     <div class="product-info-side">
       <div class="product-details">
-        <div class="product-title-main">Finora Floor Cleaner – Brown Edition</div>
+        <div class="product-title-main">Oxervel Floor Cleaner – Brown Edition</div>
         <div class="product-short-desc">Premium ayurvedic floor cleaner with natural extracts. Removes stains, leaves long-lasting freshness. Safe for tiles, marble, and wooden floors.</div>
         <div class="price-block">
           <span class="cut-price">199</span>
@@ -503,17 +492,15 @@
     </div>
   </div>
 
-  <!-- Video Section -->
   <div class="video-section">
     <div class="video-wrapper-16x9">
-      <video id="productVideo" controls poster="https://placehold.co/1280x720/f7f3ea/5c3e2b?text=Finora+Video+Preview">
+      <video id="productVideo" controls poster="https://placehold.co/1280x720/f7f3ea/5c3e2b?text=Oxervel+Video+Preview">
         <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4">
         Your browser does not support the video tag.
       </video>
     </div>
   </div>
 
-  <!-- REVIEW SECTION -->
   <div class="reviews-carousel">
     <div class="reviews-header"><h3>CUSTOMER REVIEWS</h3></div>
     <div class="carousel-container" id="reviewCarouselContainer">
@@ -528,7 +515,6 @@
   </div>
 </div>
 
-<!-- Login Required Modal -->
 <div id="loginRequiredModal" class="login-required-modal">
     <div class="login-required-card">
         <h3>Login Required</h3>
@@ -539,14 +525,12 @@
 </div>
 
 <script>
-  // Check if user is logged in
   function isUserLoggedIn() {
       return localStorage.getItem('finora_user_logged_in') === 'true';
   }
 
-  // Get selected product from localStorage (from index.html)
   let selectedProduct = {
-    name: "Finora Floor Cleaner",
+    name: "Oxervel Floor Cleaner",
     price: 129,
     oldPrice: 199
   };
@@ -555,17 +539,14 @@
     const pendingOrder = localStorage.getItem('pendingOrder');
     if (pendingOrder) {
       const orderData = JSON.parse(pendingOrder);
-      selectedProduct.name = orderData.name || "Finora Floor Cleaner";
+      selectedProduct.name = orderData.name || "Oxervel Floor Cleaner";
       selectedProduct.price = parseInt(orderData.price) || 129;
     }
   } catch(e) {}
 
-  // Update product display based on selected product
   function updateProductDisplay() {
     const titleEl = document.querySelector('.product-title-main');
     const priceEl = document.querySelector('.real-price');
-    const oldPriceEl = document.querySelector('.cut-price');
-    
     if (titleEl && selectedProduct.name) {
       titleEl.innerText = selectedProduct.name;
     }
@@ -575,9 +556,7 @@
   }
   updateProductDisplay();
 
-  // Function to proceed to checkout
   function proceedToCheckout() {
-    // Save product details for checkout
     const checkoutData = {
       name: selectedProduct.name,
       price: selectedProduct.price,
@@ -587,7 +566,6 @@
     window.location.href = 'checkout.html';
   }
 
-  // Show login modal
   function showLoginModal() {
     document.getElementById('loginRequiredModal').classList.add('active');
   }
@@ -596,7 +574,6 @@
     document.getElementById('loginRequiredModal').classList.remove('active');
   }
 
-  // Handle Buy Now button click
   document.getElementById('buyNowBtn')?.addEventListener('click', () => {
     if (isUserLoggedIn()) {
       proceedToCheckout();
@@ -605,20 +582,16 @@
     }
   });
 
-  // Handle Add to Cart button click
   document.getElementById('addToCartBtn')?.addEventListener('click', () => {
     if (isUserLoggedIn()) {
       alert(`${selectedProduct.name} added to cart!`);
-      // You can implement cart functionality here
     } else {
       showLoginModal();
     }
   });
 
-  // Login modal buttons
   document.getElementById('loginNowBtn').onclick = () => {
     hideLoginModal();
-    // Save current product before redirecting
     localStorage.setItem('pendingOrder', JSON.stringify(selectedProduct));
     window.location.href = 'account.html?redirect=checkout';
   };
@@ -626,7 +599,7 @@
     hideLoginModal();
   };
 
-  // ========== IMAGE SLIDER (touch & mouse) ==========
+  // Image Slider
   const sliderEl = document.getElementById('swipeSlider');
   let currentIdx = 0;
   const total = document.querySelectorAll('.slider-img').length;
@@ -696,7 +669,7 @@
   }
   createDots();
 
-  // ========== REVIEW CAROUSEL ==========
+  // Review Carousel
   const container = document.getElementById('reviewCarouselContainer');
   const reviewTrack = document.getElementById('reviewTrack');
   
@@ -748,14 +721,12 @@
     startAutoScroll();
   }
 
-  // Fallback for broken images
   document.querySelectorAll('.slider-img img, .review-card img').forEach(img => {
-    img.onerror = function() { this.src = "https://placehold.co/800x800/d9cfbf/5c3e2b?text=Finora"; };
+    img.onerror = function() { this.src = "https://placehold.co/800x800/d9cfbf/5c3e2b?text=Oxervel"; };
   });
   
   window.addEventListener('resize', () => updateSliderTransform());
   
-  // Style enforcement
   const enforceStyles = document.createElement('style');
   enforceStyles.textContent = `
     .reviews-carousel {
