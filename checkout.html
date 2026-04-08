@@ -364,7 +364,6 @@
         <div class="payment-methods">
           <h3>Select Payment Method</h3>
           
-          <!-- UPI Option -->
           <div class="payment-option" data-method="upi">
             <input type="radio" name="paymentMethod" value="UPI / GPay / PhonePe" id="upi">
             <label for="upi">
@@ -376,7 +375,6 @@
             </label>
           </div>
           
-          <!-- COD Option -->
           <div class="payment-option" data-method="cod">
             <input type="radio" name="paymentMethod" value="Cash on Delivery" id="cod">
             <label for="cod">
@@ -384,12 +382,11 @@
                 <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
                 <circle cx="12" cy="12" r="3"/>
               </svg>
-              Cash on Delivery (Pay at delivery)
+              Cash on Delivery
             </label>
           </div>
         </div>
 
-        <!-- UPI Pay Button (shows when UPI selected) -->
         <button class="upi-pay-btn" id="upiPayBtn" style="display: none;">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
             <path d="M3 10h18M6 10v7M18 10v7M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
@@ -426,21 +423,36 @@
   const CHAT_ID = "8128967581";
   const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfcybybJMvArMcPyUaSjPDQn1RWBmM1Y4kzZ6djxjpBHTD8uaJXQK4zqLiHoX/exec";
 
-  // UPI Payment Function
-  function payViaUPI(amount, orderId) {
-    const note = `Order ${orderId} - Oxervel`;
-    const upiUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
-    window.location.href = upiUrl;
-  }
-
-  // Telegram notification
+  // ========== DETAILED TELEGRAM NOTIFICATION ==========
   async function sendTelegramNotification(orderData) {
-    const message = `🆕 *NEW ORDER* 🛍️\n\n▫️ *Order ID:* ${orderData.orderNumber}\n▫️ *Customer:* ${orderData.customerName}\n▫️ *Phone:* ${orderData.customerPhone}\n▫️ *Address:* ${orderData.address}\n▫️ *Product:* ${orderData.productName}\n▫️ *Total:* ₹${orderData.total}\n▫️ *Payment:* ${orderData.paymentMethod}\n▫️ *Time:* ${new Date().toLocaleString()}\n\n🙏 Thank you!`;
+    const message = `🆕 *NEW ORDER RECEIVED!* 🛍️
+
+━━━━━━━━━━━━━━━━━━━━
+🆔 *Order ID:* ${orderData.orderNumber}
+👤 *Customer:* ${orderData.customerName}
+📞 *Phone:* ${orderData.customerPhone}
+📍 *Address:* ${orderData.address}
+━━━━━━━━━━━━━━━━━━━━
+🛒 *Product:* ${orderData.productName}
+💰 *Price:* ₹${orderData.total}
+💳 *Payment:* ${orderData.paymentMethod}
+━━━━━━━━━━━━━━━━━━━━
+⏰ *Time:* ${new Date().toLocaleString()}
+
+🙏 *Thank you for your order!*`;
+
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-    try { await fetch(url); console.log("✅ Telegram sent"); } catch(e) { console.log("❌ Telegram error"); }
+    try {
+      await fetch(url);
+      console.log("✅ Telegram sent");
+      return true;
+    } catch(error) {
+      console.log("❌ Telegram error:", error);
+      return false;
+    }
   }
 
-  // Save to Google Sheets
+  // ========== SAVE TO GOOGLE SHEETS ==========
   async function saveToGoogleSheets(orderData) {
     const data = {
       orderId: orderData.orderNumber,
@@ -456,10 +468,14 @@
     try {
       await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
       console.log("✅ Saved to Google Sheets");
-    } catch(e) { console.log("❌ Google Sheets error"); }
+      return true;
+    } catch(e) {
+      console.log("❌ Google Sheets error:", e);
+      return false;
+    }
   }
 
-  // Save to Local Storage
+  // ========== SAVE TO LOCAL STORAGE (sheetrecord.html) ==========
   function saveToLocalStorage(orderData) {
     const record = {
       orderId: orderData.orderNumber,
@@ -480,6 +496,46 @@
     localStorage.setItem('oxervel_orders', JSON.stringify(orders));
     localStorage.setItem('pendingOrderRecord', JSON.stringify(record));
     console.log("✅ Saved to Local Storage");
+    return true;
+  }
+
+  // ========== SAVE TO ACCOUNT.HTML (Fix for order showing in dashboard) ==========
+  function saveToAccountDashboard(orderData) {
+    // Create order object for account.html
+    const accountOrder = {
+      id: `ORD-${Date.now()}`,
+      orderNumber: orderData.orderNumber,
+      date: new Date().toISOString(),
+      total: orderData.total,
+      status: "Processing",
+      productName: orderData.productName,
+      paymentMethod: orderData.paymentMethod,
+      address: orderData.address,
+      customerName: orderData.customerName,
+      customerPhone: orderData.customerPhone,
+      customerEmail: orderData.customerEmail
+    };
+    
+    // Save to localStorage with the key that account.html expects
+    const existingOrders = localStorage.getItem('completedOrder');
+    if (existingOrders) {
+      // If there's already a pending order, combine
+      let orders = JSON.parse(existingOrders);
+      if (Array.isArray(orders)) {
+        orders.push(accountOrder);
+        localStorage.setItem('completedOrder', JSON.stringify(orders));
+      } else {
+        localStorage.setItem('completedOrder', JSON.stringify([accountOrder]));
+      }
+    } else {
+      localStorage.setItem('completedOrder', JSON.stringify([accountOrder]));
+    }
+    
+    // Also save individually for immediate display
+    localStorage.setItem('latestOrder', JSON.stringify(accountOrder));
+    
+    console.log("✅ Saved to Account Dashboard");
+    return true;
   }
 
   function showToast(msg) {
@@ -488,6 +544,12 @@
     toast.innerText = msg;
     toast.style.display = 'block';
     setTimeout(() => toast.style.display = 'none', 2000);
+  }
+
+  function payViaUPI(amount, orderId) {
+    const note = `Order ${orderId} - Oxervel`;
+    const upiUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    window.location.href = upiUrl;
   }
 
   // Load product details
@@ -518,7 +580,6 @@
       option.classList.add('selected');
       radio.checked = true;
       
-      // Show/hide UPI pay button
       if (radio.value.includes('UPI')) {
         upiPayBtn.style.display = 'flex';
       } else {
@@ -531,12 +592,10 @@
     }
   });
 
-  // Set default COD selected
   document.getElementById('cod').checked = true;
   document.querySelector('[data-method="cod"]').classList.add('selected');
   upiPayBtn.style.display = 'none';
 
-  // UPI Pay Button Click
   upiPayBtn.addEventListener('click', () => {
     const amount = selectedProduct.price;
     const orderId = `OX${Date.now()}`;
@@ -544,7 +603,7 @@
     showToast(`Opening UPI app... Please pay ₹${amount}`);
   });
 
-  // Confirm Order
+  // ========== CONFIRM ORDER ==========
   document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
     const fullName = document.getElementById('fullName').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -573,21 +632,25 @@
       customerEmail: email
     };
 
+    // Save to all systems
     saveToLocalStorage(orderData);
-    await sendTelegramNotification(orderData);
+    saveToAccountDashboard(orderData);
     await saveToGoogleSheets(orderData);
+    await sendTelegramNotification(orderData);
     
+    // Call FinoraAPI if available
     if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
       window.FinoraAPI.addOrder(orderData);
     }
     
+    // Cleanup
     localStorage.removeItem('checkoutProduct');
     localStorage.removeItem('pendingOrder');
     
     showToast(`Order confirmed • ${orderData.orderNumber}`);
     
     if (paymentMethod.includes('UPI')) {
-      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n⚠️ IMPORTANT: Please complete UPI payment using the app.\n\nYour order will be processed after payment confirmation.\n\nYour order will be delivered within 3-5 business days.`);
+      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n⚠️ Please complete UPI payment.\n\nYour order will be delivered within 3-5 business days.`);
     } else {
       alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\nYour order will be delivered within 3-5 business days.\n\nPay ₹${selectedProduct.price} at delivery.`);
     }
@@ -596,4 +659,4 @@
   });
 </script>
 </body>
-  </html>
+</html>
