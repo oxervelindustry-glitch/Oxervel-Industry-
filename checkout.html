@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>Finora | Checkout – Complete Your Order</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+    }
+
+    body {
+      background-color: #f7f3ea;
+    }
+
+    .checkout-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    .checkout-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .checkout-header h1 {
+      font-size: 36px;
+      font-weight: 800;
+      color: #3e2a1c;
+      margin-bottom: 8px;
+    }
+
+    .checkout-header p {
+      color: #7f6242;
+      font-size: 16px;
+    }
+
+    .checkout-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 48px;
+    }
+
+    .order-summary {
+      background: #fffaf5;
+      border-radius: 32px;
+      padding: 28px;
+      border: 1px solid #e2d5c4;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .order-summary h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #5c3e2b;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e2d5c4;
+    }
+
+    .product-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid #ede0d2;
+    }
+
+    .product-name {
+      font-weight: 600;
+      color: #4a3422;
+      font-size: 18px;
+    }
+
+    .product-price {
+      font-weight: 800;
+      color: #5c3e2b;
+      font-size: 20px;
+    }
+
+    .total-section {
+      padding: 20px 0 0;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      font-size: 16px;
+      color: #6b5340;
+    }
+
+    .grand-total {
+      font-weight: 800;
+      font-size: 24px;
+      color: #5c3e2b;
+      border-top: 2px solid #e2d5c4;
+      padding-top: 16px;
+      margin-top: 8px;
+    }
+
+    .payment-section {
+      background: #fffaf5;
+      border-radius: 32px;
+      padding: 28px;
+      border: 1px solid #e2d5c4;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    .payment-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #5c3e2b;
+      margin-bottom: 24px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      color: #5c3e2b;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e2d5c4;
+      border-radius: 16px;
+      font-size: 15px;
+      background: white;
+      transition: all 0.2s;
+      outline: none;
+    }
+
+    .form-group input:focus, .form-group textarea:focus {
+      border-color: #5c3e2b;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .payment-methods {
+      margin: 24px 0;
+    }
+
+    .payment-methods h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #5c3e2b;
+      margin-bottom: 12px;
+    }
+
+    .payment-option {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px;
+      border: 2px solid #e2d5c4;
+      border-radius: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .payment-option:hover {
+      border-color: #b48c5c;
+      background: #fefaf5;
+    }
+
+    .payment-option.selected {
+      border-color: #5c3e2b;
+      background: #f3ede5;
+    }
+
+    .payment-option input[type="radio"] {
+      width: 20px;
+      height: 20px;
+      accent-color: #5c3e2b;
+    }
+
+    .payment-option label {
+      font-weight: 500;
+      color: #4a3422;
+      cursor: pointer;
+      flex: 1;
+    }
+
+    .confirm-btn {
+      width: 100%;
+      background: #5c3e2b;
+      color: white;
+      border: none;
+      padding: 16px;
+      border-radius: 60px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 16px;
+    }
+
+    .confirm-btn:hover {
+      background: #3e2a1c;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-top: 24px;
+      color: #8b694a;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .back-link:hover {
+      color: #5c3e2b;
+    }
+
+    /* Toast Notification */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #2c3e2b;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 13px;
+      z-index: 1000;
+      animation: fadeInOut 2.5s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateY(20px); }
+      15% { opacity: 1; transform: translateY(0); }
+      85% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(20px); }
+    }
+
+    @media (max-width: 768px) {
+      .checkout-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .checkout-container {
+        padding: 24px 16px 60px;
+      }
+      .checkout-header h1 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="checkout-container">
+  <div class="checkout-header">
+    <h1>Complete Your Order</h1>
+    <p>Secure checkout – Free shipping on all orders</p>
+  </div>
+
+  <div class="checkout-grid">
+    <div class="order-summary">
+      <h2>Order Summary</h2>
+      <div id="orderSummaryDetails">
+        <div class="product-detail">
+          <span class="product-name" id="productName">Finora Floor Cleaner</span>
+          <span class="product-price" id="productPrice">₹129</span>
+        </div>
+      </div>
+      <div class="total-section">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span id="subtotal">₹129</span>
+        </div>
+        <div class="total-row">
+          <span>Shipping</span>
+          <span>Free</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Total</span>
+          <span id="grandTotal">₹129</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="payment-section">
+      <h2>Shipping & Payment</h2>
+      <div class="form-group">
+        <label>Full Name *</label>
+        <input type="text" id="fullName" placeholder="Enter your full name">
+      </div>
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="phone" placeholder="Enter your phone number">
+      </div>
+      <div class="form-group">
+        <label>Email Address *</label>
+        <input type="email" id="email" placeholder="Enter your email">
+      </div>
+      <div class="form-group">
+        <label>Delivery Address *</label>
+        <textarea id="address" placeholder="Enter your complete address with pin code"></textarea>
+      </div>
+
+      <div class="payment-methods">
+        <h3>Select Payment Method</h3>
+        <div class="payment-option" data-method="upi">
+          <input type="radio" name="paymentMethod" value="UPI / GPay / PhonePe" id="upi">
+          <label for="upi">UPI / Google Pay / PhonePe</label>
+        </div>
+        <div class="payment-option" data-method="cod">
+          <input type="radio" name="paymentMethod" value="Cash on Delivery" id="cod">
+          <label for="cod">Cash on Delivery (COD)</label>
+        </div>
+        <div class="payment-option" data-method="card">
+          <input type="radio" name="paymentMethod" value="Credit / Debit Card" id="card">
+          <label for="card">Credit / Debit Card</label>
+        </div>
+      </div>
+
+      <button class="confirm-btn" id="confirmOrderBtn">Confirm Order</button>
+      <a href="order.html" class="back-link">← Back to Product</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ========== TELEGRAM CONFIG (Aapki details) ==========
+  const BOT_TOKEN = "8767268068:AAFjJ2vreTe4YxdANS1cRmIatjxLNocCRf8";
+  const CHAT_ID = "8128967581";
+
+  // ========== TELEGRAM NOTIFICATION FUNCTION ==========
+  async function sendTelegramNotification(orderData) {
+    const message = `🆕 *NEW ORDER RECEIVED!* 🛍️
+
+━━━━━━━━━━━━━━━━━━━━
+🆔 *Order ID:* ${orderData.orderNumber}
+👤 *Customer:* ${orderData.customerName}
+📞 *Phone:* ${orderData.customerPhone}
+📍 *Address:* ${orderData.address}
+━━━━━━━━━━━━━━━━━━━━
+🛒 *Product:* ${orderData.productName}
+💰 *Price:* ₹${orderData.total}
+💳 *Payment:* ${orderData.paymentMethod}
+━━━━━━━━━━━━━━━━━━━━
+⏰ *Time:* ${new Date().toLocaleString()}
+
+🙏 *Thank you for your order!*`;
+
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+    
+    try {
+      const response = await fetch(url);
+      const result = await response.json();
+      if (result.ok) {
+        console.log("✅ Telegram notification sent!");
+        return true;
+      } else {
+        console.log("❌ Telegram error:", result);
+        return false;
+      }
+    } catch(error) {
+      console.log("❌ Telegram send failed:", error);
+      return false;
+    }
+  }
+
+  // ========== SAVE TO SHEETRECORD (LocalStorage) ==========
+  function saveToSheetRecord(orderData) {
+    const record = {
+      orderId: orderData.orderNumber,
+      customerName: orderData.customerName,
+      phone: orderData.customerPhone,
+      address: orderData.address,
+      productName: orderData.productName,
+      quantity: 1,
+      price: orderData.total,
+      total: orderData.total,
+      paymentMethod: orderData.paymentMethod,
+      status: "Processing",
+      dateTime: new Date().toLocaleString()
+    };
+    
+    // Save to localStorage for sheetrecord.html
+    const existingRecords = localStorage.getItem('oxervel_orders');
+    let orders = existingRecords ? JSON.parse(existingRecords) : [];
+    orders.unshift({ ...record, id: Date.now() });
+    localStorage.setItem('oxervel_orders', JSON.stringify(orders));
+    
+    // Also save as pending for immediate view
+    localStorage.setItem('pendingOrderRecord', JSON.stringify(record));
+    
+    console.log("✅ Order saved to sheetrecord!");
+    return true;
+  }
+
+  // ========== SHOW TOAST NOTIFICATION ==========
+  function showToast(message) {
+    let toast = document.getElementById('toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'toast';
+      document.body.appendChild(toast);
+    }
+    toast.innerText = message;
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 2500);
+  }
+
+  // ========== LOAD PRODUCT DETAILS ==========
+  let selectedProduct = {
+    name: "Finora Floor Cleaner",
+    price: 129
+  };
+
+  try {
+    const checkoutProduct = localStorage.getItem('checkoutProduct');
+    if (checkoutProduct) {
+      const productData = JSON.parse(checkoutProduct);
+      selectedProduct.name = productData.name || "Finora Floor Cleaner";
+      selectedProduct.price = parseInt(productData.price) || 129;
+    }
+  } catch(e) {}
+
+  // Update UI with product details
+  document.getElementById('productName').innerText = selectedProduct.name;
+  document.getElementById('productPrice').innerText = `₹${selectedProduct.price}`;
+  document.getElementById('subtotal').innerText = `₹${selectedProduct.price}`;
+  document.getElementById('grandTotal').innerText = `₹${selectedProduct.price}`;
+
+  // Payment method selection styling
+  const paymentOptions = document.querySelectorAll('.payment-option');
+  let selectedMethod = 'UPI / GPay / PhonePe';
+
+  paymentOptions.forEach(option => {
+    const radio = option.querySelector('input[type="radio"]');
+    option.addEventListener('click', () => {
+      paymentOptions.forEach(opt => opt.classList.remove('selected'));
+      option.classList.add('selected');
+      radio.checked = true;
+      selectedMethod = radio.value;
+    });
+    if (radio.checked) {
+      option.classList.add('selected');
+      selectedMethod = radio.value;
+    }
+  });
+
+  // Set default selection
+  document.getElementById('upi').checked = true;
+  document.querySelector('[data-method="upi"]').classList.add('selected');
+
+  // ========== CONFIRM ORDER ==========
+  document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
+    const fullName = document.getElementById('fullName').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const address = document.getElementById('address').value.trim();
+
+    if (!fullName) { alert('Please enter your full name'); return; }
+    if (!phone) { alert('Please enter your phone number'); return; }
+    if (!email) { alert('Please enter your email address'); return; }
+    if (!address) { alert('Please enter your delivery address'); return; }
+
+    const selectedPayment = document.querySelector('input[name="paymentMethod"]:checked');
+    const paymentMethod = selectedPayment ? selectedPayment.value : 'Cash on Delivery';
+
+    const orderData = {
+      id: `ORD-${Date.now()}`,
+      orderNumber: `FIN${Math.floor(Math.random() * 100000)}`,
+      date: new Date().toISOString(),
+      total: selectedProduct.price,
+      status: "Processing",
+      itemsSummary: selectedProduct.name,
+      productName: selectedProduct.name,
+      paymentMethod: paymentMethod,
+      address: address,
+      customerName: fullName,
+      customerPhone: phone,
+      customerEmail: email
+    };
+
+    // 1. Save to sheetrecord (LocalStorage)
+    saveToSheetRecord(orderData);
+    
+    // 2. Send Telegram Notification
+    await sendTelegramNotification(orderData);
+    
+    // 3. Try to save via FinoraAPI (if available - account.html)
+    if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
+      const result = window.FinoraAPI.addOrder(orderData);
+      if (result) {
+        localStorage.removeItem('checkoutProduct');
+        localStorage.removeItem('pendingOrder');
+        showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
+        alert(`Order Confirmed!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n✅ Telegram notification sent to owner!\n\nYour order will be delivered within 3-5 business days.`);
+        window.location.href = 'account.html';
+        return;
+      }
+    }
+    
+    // 4. Fallback: Just save locally
+    localStorage.setItem('completedOrder', JSON.stringify(orderData));
+    localStorage.removeItem('checkoutProduct');
+    localStorage.removeItem('pendingOrder');
+    
+    showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
+    alert(`Order placed successfully!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n✅ Owner has been notified via Telegram!\n\nPlease login to view your order history.`);
+    window.location.href = 'account.html';
+  });
+</script>
+</body>
+</html>
