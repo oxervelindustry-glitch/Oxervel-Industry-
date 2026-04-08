@@ -341,8 +341,8 @@
   const BOT_TOKEN = "8767268068:AAFjJ2vreTe4YxdANS1cRmIatjxLNocCRf8";
   const CHAT_ID = "8128967581";
 
-  // ========== GOOGLE SHEETS WEB APP URL ==========
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfcybybJMvArMcPyUaSjPDQn1RWBmM1Y4kzZ6djxjpBHTD8uaJXQK4zqLiHoX/exec";
+  // ========== GOOGLE SHEETS WEB APP URL (UPDATED) ==========
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzfYvRlTHhEhWgvCYXMQ4UTqsRnxxXWNA_N65qmjSisulHekieE3GKHDB6/exec";
 
   // ========== TELEGRAM NOTIFICATION ==========
   async function sendTelegramNotification(orderData) {
@@ -365,11 +365,17 @@
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
     
     try {
-      await fetch(url);
-      console.log("✅ Telegram sent");
-      return true;
+      const response = await fetch(url);
+      const result = await response.json();
+      if (result.ok) {
+        console.log("✅ Telegram notification sent!");
+        return true;
+      } else {
+        console.log("❌ Telegram error:", result);
+        return false;
+      }
     } catch(error) {
-      console.log("❌ Telegram error:", error);
+      console.log("❌ Telegram send failed:", error);
       return false;
     }
   }
@@ -389,13 +395,13 @@
     };
     
     try {
-      await fetch(GOOGLE_SCRIPT_URL, {
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       });
-      console.log("✅ Saved to Google Sheets");
+      console.log("✅ Order saved to Google Sheets!");
       return true;
     } catch(error) {
       console.log("❌ Google Sheets error:", error);
@@ -425,7 +431,7 @@
     localStorage.setItem('oxervel_orders', JSON.stringify(orders));
     localStorage.setItem('pendingOrderRecord', JSON.stringify(record));
     
-    console.log("✅ Saved to Local Storage");
+    console.log("✅ Order saved to Local Storage!");
     return true;
   }
 
@@ -503,30 +509,42 @@
       customerEmail: email
     };
 
-    // 1. Save to Local Storage
-    saveToLocalStorage(orderData);
-    
-    // 2. Send Telegram Notification
-    await sendTelegramNotification(orderData);
-    
-    // 3. Save to Google Sheets
-    await saveToGoogleSheets(orderData);
-    
-    // 4. Save to account.html (if available)
-    if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
-      window.FinoraAPI.addOrder(orderData);
+    // Show loading
+    const btn = document.getElementById('confirmOrderBtn');
+    btn.innerText = "Processing...";
+    btn.disabled = true;
+
+    try {
+      // 1. Save to Local Storage
+      saveToLocalStorage(orderData);
+      
+      // 2. Send Telegram Notification
+      await sendTelegramNotification(orderData);
+      
+      // 3. Save to Google Sheets
+      await saveToGoogleSheets(orderData);
+      
+      // 4. Save to account.html (if available)
+      if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
+        window.FinoraAPI.addOrder(orderData);
+      }
+      
+      // 5. Cleanup
+      localStorage.removeItem('checkoutProduct');
+      localStorage.removeItem('pendingOrder');
+      
+      showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
+      
+      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n📱 Telegram notification sent!\n📊 Saved to Google Sheets!\n📝 Saved to Local Records!\n\nYour order will be delivered within 3-5 business days.`);
+      
+      window.location.href = 'account.html';
+    } catch(error) {
+      console.error("Order error:", error);
+      alert("Order placed but there was an issue. Please contact support.");
+      btn.innerText = "Confirm Order";
+      btn.disabled = false;
     }
-    
-    // 5. Cleanup and redirect
-    localStorage.removeItem('checkoutProduct');
-    localStorage.removeItem('pendingOrder');
-    
-    showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
-    
-    alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n📱 Telegram notification sent to owner!\n📊 Saved to Google Sheets!\n📝 Saved to Local Records!\n\nYour order will be delivered within 3-5 business days.`);
-    
-    window.location.href = 'account.html';
   });
 </script>
 </body>
-  </html>
+</html>
