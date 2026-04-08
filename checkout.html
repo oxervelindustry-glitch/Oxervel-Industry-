@@ -228,7 +228,6 @@
       color: #5c3e2b;
     }
 
-    /* Toast Notification */
     #toast {
       position: fixed;
       bottom: 20px;
@@ -338,11 +337,14 @@
 </div>
 
 <script>
-  // ========== TELEGRAM CONFIG (Aapki details) ==========
+  // ========== TELEGRAM CONFIG ==========
   const BOT_TOKEN = "8767268068:AAFjJ2vreTe4YxdANS1cRmIatjxLNocCRf8";
   const CHAT_ID = "8128967581";
 
-  // ========== TELEGRAM NOTIFICATION FUNCTION ==========
+  // ========== GOOGLE SHEETS WEB APP URL ==========
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfcybybJMvArMcPyUaSjPDQn1RWBmM1Y4kzZ6djxjpBHTD8uaJXQK4zqLiHoX/exec";
+
+  // ========== TELEGRAM NOTIFICATION ==========
   async function sendTelegramNotification(orderData) {
     const message = `🆕 *NEW ORDER RECEIVED!* 🛍️
 
@@ -363,23 +365,46 @@
     const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
     
     try {
-      const response = await fetch(url);
-      const result = await response.json();
-      if (result.ok) {
-        console.log("✅ Telegram notification sent!");
-        return true;
-      } else {
-        console.log("❌ Telegram error:", result);
-        return false;
-      }
+      await fetch(url);
+      console.log("✅ Telegram sent");
+      return true;
     } catch(error) {
-      console.log("❌ Telegram send failed:", error);
+      console.log("❌ Telegram error:", error);
       return false;
     }
   }
 
-  // ========== SAVE TO SHEETRECORD (LocalStorage) ==========
-  function saveToSheetRecord(orderData) {
+  // ========== SAVE TO GOOGLE SHEETS ==========
+  async function saveToGoogleSheets(orderData) {
+    const data = {
+      orderId: orderData.orderNumber,
+      customerName: orderData.customerName,
+      phone: orderData.customerPhone,
+      address: orderData.address,
+      productName: orderData.productName,
+      quantity: 1,
+      price: orderData.total,
+      total: orderData.total,
+      paymentMethod: orderData.paymentMethod
+    };
+    
+    try {
+      await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      console.log("✅ Saved to Google Sheets");
+      return true;
+    } catch(error) {
+      console.log("❌ Google Sheets error:", error);
+      return false;
+    }
+  }
+
+  // ========== SAVE TO LOCAL STORAGE (sheetrecord.html) ==========
+  function saveToLocalStorage(orderData) {
     const record = {
       orderId: orderData.orderNumber,
       customerName: orderData.customerName,
@@ -394,20 +419,17 @@
       dateTime: new Date().toLocaleString()
     };
     
-    // Save to localStorage for sheetrecord.html
-    const existingRecords = localStorage.getItem('oxervel_orders');
-    let orders = existingRecords ? JSON.parse(existingRecords) : [];
+    const existing = localStorage.getItem('oxervel_orders');
+    let orders = existing ? JSON.parse(existing) : [];
     orders.unshift({ ...record, id: Date.now() });
     localStorage.setItem('oxervel_orders', JSON.stringify(orders));
-    
-    // Also save as pending for immediate view
     localStorage.setItem('pendingOrderRecord', JSON.stringify(record));
     
-    console.log("✅ Order saved to sheetrecord!");
+    console.log("✅ Saved to Local Storage");
     return true;
   }
 
-  // ========== SHOW TOAST NOTIFICATION ==========
+  // ========== SHOW TOAST ==========
   function showToast(message) {
     let toast = document.getElementById('toast');
     if (!toast) {
@@ -417,16 +439,11 @@
     }
     toast.innerText = message;
     toast.style.display = 'block';
-    setTimeout(() => {
-      toast.style.display = 'none';
-    }, 2500);
+    setTimeout(() => { toast.style.display = 'none'; }, 2500);
   }
 
   // ========== LOAD PRODUCT DETAILS ==========
-  let selectedProduct = {
-    name: "Finora Floor Cleaner",
-    price: 129
-  };
+  let selectedProduct = { name: "Finora Floor Cleaner", price: 129 };
 
   try {
     const checkoutProduct = localStorage.getItem('checkoutProduct');
@@ -437,31 +454,22 @@
     }
   } catch(e) {}
 
-  // Update UI with product details
   document.getElementById('productName').innerText = selectedProduct.name;
   document.getElementById('productPrice').innerText = `₹${selectedProduct.price}`;
   document.getElementById('subtotal').innerText = `₹${selectedProduct.price}`;
   document.getElementById('grandTotal').innerText = `₹${selectedProduct.price}`;
 
-  // Payment method selection styling
+  // Payment method selection
   const paymentOptions = document.querySelectorAll('.payment-option');
-  let selectedMethod = 'UPI / GPay / PhonePe';
-
   paymentOptions.forEach(option => {
     const radio = option.querySelector('input[type="radio"]');
     option.addEventListener('click', () => {
       paymentOptions.forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       radio.checked = true;
-      selectedMethod = radio.value;
     });
-    if (radio.checked) {
-      option.classList.add('selected');
-      selectedMethod = radio.value;
-    }
+    if (radio.checked) option.classList.add('selected');
   });
-
-  // Set default selection
   document.getElementById('upi').checked = true;
   document.querySelector('[data-method="upi"]').classList.add('selected');
 
@@ -495,34 +503,30 @@
       customerEmail: email
     };
 
-    // 1. Save to sheetrecord (LocalStorage)
-    saveToSheetRecord(orderData);
+    // 1. Save to Local Storage
+    saveToLocalStorage(orderData);
     
     // 2. Send Telegram Notification
     await sendTelegramNotification(orderData);
     
-    // 3. Try to save via FinoraAPI (if available - account.html)
+    // 3. Save to Google Sheets
+    await saveToGoogleSheets(orderData);
+    
+    // 4. Save to account.html (if available)
     if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
-      const result = window.FinoraAPI.addOrder(orderData);
-      if (result) {
-        localStorage.removeItem('checkoutProduct');
-        localStorage.removeItem('pendingOrder');
-        showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
-        alert(`Order Confirmed!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n✅ Telegram notification sent to owner!\n\nYour order will be delivered within 3-5 business days.`);
-        window.location.href = 'account.html';
-        return;
-      }
+      window.FinoraAPI.addOrder(orderData);
     }
     
-    // 4. Fallback: Just save locally
-    localStorage.setItem('completedOrder', JSON.stringify(orderData));
+    // 5. Cleanup and redirect
     localStorage.removeItem('checkoutProduct');
     localStorage.removeItem('pendingOrder');
     
     showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
-    alert(`Order placed successfully!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n✅ Owner has been notified via Telegram!\n\nPlease login to view your order history.`);
+    
+    alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n📱 Telegram notification sent to owner!\n📊 Saved to Google Sheets!\n📝 Saved to Local Records!\n\nYour order will be delivered within 3-5 business days.`);
+    
     window.location.href = 'account.html';
   });
 </script>
 </body>
-</html>
+  </html>
