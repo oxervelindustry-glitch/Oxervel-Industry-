@@ -3,161 +3,163 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-  <title>Finora | Checkout – Complete Your Order</title>
+  <title>Oxervel | Checkout</title>
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     body {
-      background-color: #f7f3ea;
+      background: #f5f0ea;
+      min-height: 100vh;
+    }
+
+    .icon {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 1.5;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .checkout-container {
-      max-width: 1200px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 40px 24px 80px;
+      padding: 32px 20px 60px;
     }
 
     .checkout-header {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 32px;
     }
 
     .checkout-header h1 {
-      font-size: 36px;
-      font-weight: 800;
-      color: #3e2a1c;
-      margin-bottom: 8px;
+      font-size: 28px;
+      font-weight: 700;
+      color: #4a3422;
+      margin-bottom: 6px;
     }
 
     .checkout-header p {
-      color: #7f6242;
-      font-size: 16px;
+      color: #8b7358;
+      font-size: 13px;
     }
 
     .checkout-grid {
       display: grid;
       grid-template-columns: 1fr 1.2fr;
-      gap: 48px;
+      gap: 24px;
     }
 
-    .order-summary {
-      background: #fffaf5;
-      border-radius: 32px;
-      padding: 28px;
-      border: 1px solid #e2d5c4;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    .card {
+      background: white;
+      border-radius: 24px;
+      border: 1px solid #e5dcd0;
+      overflow: hidden;
     }
 
-    .order-summary h2 {
-      font-size: 22px;
-      font-weight: 700;
-      color: #5c3e2b;
-      margin-bottom: 20px;
-      padding-bottom: 12px;
-      border-bottom: 2px solid #e2d5c4;
+    .card-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #efe8df;
+      display: flex;
+      align-items: center;
+      gap: 10px;
     }
 
-    .product-detail {
+    .card-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: #4a3422;
+    }
+
+    .card-body {
+      padding: 20px;
+    }
+
+    .product-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 0;
-      border-bottom: 1px solid #ede0d2;
+      padding: 12px 0;
+      border-bottom: 1px solid #efe8df;
     }
 
     .product-name {
       font-weight: 600;
       color: #4a3422;
-      font-size: 18px;
+      font-size: 14px;
     }
 
     .product-price {
-      font-weight: 800;
-      color: #5c3e2b;
-      font-size: 20px;
-    }
-
-    .total-section {
-      padding: 20px 0 0;
+      font-weight: 700;
+      color: #4a3422;
+      font-size: 16px;
     }
 
     .total-row {
       display: flex;
       justify-content: space-between;
-      padding: 12px 0;
-      font-size: 16px;
-      color: #6b5340;
+      padding: 10px 0;
+      font-size: 13px;
+      color: #8b7358;
     }
 
     .grand-total {
-      font-weight: 800;
-      font-size: 24px;
-      color: #5c3e2b;
-      border-top: 2px solid #e2d5c4;
-      padding-top: 16px;
-      margin-top: 8px;
-    }
-
-    .payment-section {
-      background: #fffaf5;
-      border-radius: 32px;
-      padding: 28px;
-      border: 1px solid #e2d5c4;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-    }
-
-    .payment-section h2 {
-      font-size: 22px;
       font-weight: 700;
-      color: #5c3e2b;
-      margin-bottom: 24px;
+      font-size: 18px;
+      color: #4a3422;
+      border-top: 1px solid #efe8df;
+      margin-top: 8px;
+      padding-top: 12px;
     }
 
     .form-group {
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .form-group label {
       display: block;
+      font-size: 12px;
       font-weight: 600;
-      color: #5c3e2b;
-      margin-bottom: 8px;
-      font-size: 14px;
+      color: #4a3422;
+      margin-bottom: 6px;
     }
 
-    .form-group input, .form-group textarea {
+    .form-group input,
+    .form-group textarea {
       width: 100%;
-      padding: 14px 16px;
-      border: 2px solid #e2d5c4;
+      padding: 10px 14px;
+      border: 1.5px solid #e5dcd0;
       border-radius: 16px;
-      font-size: 15px;
+      font-size: 13px;
       background: white;
-      transition: all 0.2s;
       outline: none;
+      transition: all 0.2s;
     }
 
-    .form-group input:focus, .form-group textarea:focus {
-      border-color: #5c3e2b;
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #c9b9a6;
     }
 
     .form-group textarea {
       resize: vertical;
-      min-height: 80px;
+      min-height: 70px;
     }
 
     .payment-methods {
-      margin: 24px 0;
+      margin: 20px 0 16px;
     }
 
     .payment-methods h3 {
-      font-size: 16px;
+      font-size: 12px;
       font-weight: 600;
-      color: #5c3e2b;
+      color: #4a3422;
       margin-bottom: 12px;
     }
 
@@ -165,81 +167,113 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 12px;
-      border: 2px solid #e2d5c4;
-      border-radius: 16px;
-      margin-bottom: 12px;
+      padding: 12px 16px;
+      border: 1.5px solid #e5dcd0;
+      border-radius: 20px;
+      margin-bottom: 10px;
       cursor: pointer;
       transition: all 0.2s;
+      background: white;
     }
 
     .payment-option:hover {
       border-color: #b48c5c;
-      background: #fefaf5;
+      background: #fefcf9;
     }
 
     .payment-option.selected {
-      border-color: #5c3e2b;
-      background: #f3ede5;
+      border-color: #4a3422;
+      background: #faf7f2;
     }
 
     .payment-option input[type="radio"] {
-      width: 20px;
-      height: 20px;
-      accent-color: #5c3e2b;
+      width: 16px;
+      height: 16px;
+      accent-color: #4a3422;
+      cursor: pointer;
     }
 
     .payment-option label {
+      font-size: 13px;
       font-weight: 500;
       color: #4a3422;
       cursor: pointer;
       flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .confirm-btn {
       width: 100%;
-      background: #5c3e2b;
+      background: #4a3422;
       color: white;
       border: none;
-      padding: 16px;
-      border-radius: 60px;
-      font-size: 18px;
-      font-weight: 700;
+      padding: 12px;
+      border-radius: 40px;
+      font-size: 14px;
+      font-weight: 600;
       cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       transition: all 0.2s;
-      margin-top: 16px;
+      margin-top: 8px;
     }
 
     .confirm-btn:hover {
-      background: #3e2a1c;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      background: #3a281a;
     }
 
     .back-link {
-      display: inline-block;
-      margin-top: 24px;
-      color: #8b694a;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 16px;
+      color: #8b7358;
       text-decoration: none;
+      font-size: 12px;
       font-weight: 500;
     }
 
     .back-link:hover {
-      color: #5c3e2b;
+      color: #4a3422;
+    }
+
+    .upi-pay-btn {
+      width: 100%;
+      background: #1a73e8;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 40px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 10px;
+      transition: all 0.2s;
+    }
+
+    .upi-pay-btn:hover {
+      background: #0d5bbf;
     }
 
     #toast {
       position: fixed;
       bottom: 20px;
       right: 20px;
-      background: #2c3e2b;
+      background: #4a3422;
       color: white;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border-radius: 40px;
-      font-size: 13px;
+      font-size: 12px;
       z-index: 1000;
-      animation: fadeInOut 2.5s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      animation: fadeInOut 2s ease;
     }
 
     @keyframes fadeInOut {
@@ -252,13 +286,13 @@
     @media (max-width: 768px) {
       .checkout-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
+        gap: 20px;
       }
       .checkout-container {
-        padding: 24px 16px 60px;
+        padding: 20px 16px 40px;
       }
       .checkout-header h1 {
-        font-size: 28px;
+        font-size: 24px;
       }
     }
   </style>
@@ -267,19 +301,24 @@
 <div class="checkout-container">
   <div class="checkout-header">
     <h1>Complete Your Order</h1>
-    <p>Secure checkout – Free shipping on all orders</p>
+    <p>Secure checkout • Free shipping</p>
   </div>
 
   <div class="checkout-grid">
-    <div class="order-summary">
-      <h2>Order Summary</h2>
-      <div id="orderSummaryDetails">
-        <div class="product-detail">
-          <span class="product-name" id="productName">Finora Floor Cleaner</span>
+    <!-- Order Summary -->
+    <div class="card">
+      <div class="card-header">
+        <svg class="icon" viewBox="0 0 24 24">
+          <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+        </svg>
+        <h2>Order Summary</h2>
+      </div>
+      <div class="card-body">
+        <div class="product-row">
+          <span class="product-name" id="productName">Oxervel Floor Cleaner</span>
           <span class="product-price" id="productPrice">₹129</span>
         </div>
-      </div>
-      <div class="total-section">
         <div class="total-row">
           <span>Subtotal</span>
           <span id="subtotal">₹129</span>
@@ -295,92 +334,113 @@
       </div>
     </div>
 
-    <div class="payment-section">
-      <h2>Shipping & Payment</h2>
-      <div class="form-group">
-        <label>Full Name *</label>
-        <input type="text" id="fullName" placeholder="Enter your full name">
+    <!-- Payment & Shipping -->
+    <div class="card">
+      <div class="card-header">
+        <svg class="icon" viewBox="0 0 24 24">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+          <circle cx="12" cy="7" r="4"/>
+        </svg>
+        <h2>Shipping Details</h2>
       </div>
-      <div class="form-group">
-        <label>Phone Number *</label>
-        <input type="tel" id="phone" placeholder="Enter your phone number">
-      </div>
-      <div class="form-group">
-        <label>Email Address *</label>
-        <input type="email" id="email" placeholder="Enter your email">
-      </div>
-      <div class="form-group">
-        <label>Delivery Address *</label>
-        <textarea id="address" placeholder="Enter your complete address with pin code"></textarea>
-      </div>
+      <div class="card-body">
+        <div class="form-group">
+          <label>Full name</label>
+          <input type="text" id="fullName" placeholder="Enter full name">
+        </div>
+        <div class="form-group">
+          <label>Phone number</label>
+          <input type="tel" id="phone" placeholder="Enter phone number">
+        </div>
+        <div class="form-group">
+          <label>Email address</label>
+          <input type="email" id="email" placeholder="Enter email address">
+        </div>
+        <div class="form-group">
+          <label>Delivery address</label>
+          <textarea id="address" placeholder="Enter complete address with pin code"></textarea>
+        </div>
 
-      <div class="payment-methods">
-        <h3>Select Payment Method</h3>
-        <div class="payment-option" data-method="upi">
-          <input type="radio" name="paymentMethod" value="UPI / GPay / PhonePe" id="upi">
-          <label for="upi">UPI / Google Pay / PhonePe</label>
+        <div class="payment-methods">
+          <h3>Select Payment Method</h3>
+          
+          <!-- UPI Option -->
+          <div class="payment-option" data-method="upi">
+            <input type="radio" name="paymentMethod" value="UPI / GPay / PhonePe" id="upi">
+            <label for="upi">
+              <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                <rect x="2" y="5" width="20" height="14" rx="2" ry="2"/>
+                <line x1="8" y1="12" x2="16" y2="12"/>
+              </svg>
+              UPI / Google Pay / PhonePe
+            </label>
+          </div>
+          
+          <!-- COD Option -->
+          <div class="payment-option" data-method="cod">
+            <input type="radio" name="paymentMethod" value="Cash on Delivery" id="cod">
+            <label for="cod">
+              <svg class="icon" viewBox="0 0 24 24" width="16" height="16">
+                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+                <circle cx="12" cy="12" r="3"/>
+              </svg>
+              Cash on Delivery (Pay at delivery)
+            </label>
+          </div>
         </div>
-        <div class="payment-option" data-method="cod">
-          <input type="radio" name="paymentMethod" value="Cash on Delivery" id="cod">
-          <label for="cod">Cash on Delivery (COD)</label>
-        </div>
-        <div class="payment-option" data-method="card">
-          <input type="radio" name="paymentMethod" value="Credit / Debit Card" id="card">
-          <label for="card">Credit / Debit Card</label>
-        </div>
-      </div>
 
-      <button class="confirm-btn" id="confirmOrderBtn">Confirm Order</button>
-      <a href="order.html" class="back-link">← Back to Product</a>
+        <!-- UPI Pay Button (shows when UPI selected) -->
+        <button class="upi-pay-btn" id="upiPayBtn" style="display: none;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+            <path d="M3 10h18M6 10v7M18 10v7M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2z"/>
+          </svg>
+          Pay via UPI
+        </button>
+
+        <button class="confirm-btn" id="confirmOrderBtn">
+          <svg class="icon" viewBox="0 0 24 24">
+            <polyline points="20 6 9 17 4 12"/>
+          </svg>
+          Confirm Order
+        </button>
+        <a href="order.html" class="back-link">
+          <svg class="icon" viewBox="0 0 24 24">
+            <line x1="19" y1="12" x2="5" y2="12"/>
+            <polyline points="12 19 5 12 12 5"/>
+          </svg>
+          Back to product
+        </a>
+      </div>
     </div>
   </div>
 </div>
 
 <script>
-  // ========== TELEGRAM CONFIG ==========
+  // ========== UPI CONFIG ==========
+  const UPI_ID = "8081865350-3@ybl";
+  const PHONE = "8081865350";
+  const NAME = "Oxervel Industry";
+
+  // ========== TELEGRAM & GOOGLE SHEETS CONFIG ==========
   const BOT_TOKEN = "8767268068:AAFjJ2vreTe4YxdANS1cRmIatjxLNocCRf8";
   const CHAT_ID = "8128967581";
+  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfcybybJMvArMcPyUaSjPDQn1RWBmM1Y4kzZ6djxjpBHTD8uaJXQK4zqLiHoX/exec";
 
-  // ========== GOOGLE SHEETS WEB APP URL (UPDATED) ==========
-  const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzfYvRlTHhEhWgvCYXMQ4UTqsRnxxXWNA_N65qmjSisulHekieE3GKHDB6/exec";
-
-  // ========== TELEGRAM NOTIFICATION ==========
-  async function sendTelegramNotification(orderData) {
-    const message = `🆕 *NEW ORDER RECEIVED!* 🛍️
-
-━━━━━━━━━━━━━━━━━━━━
-🆔 *Order ID:* ${orderData.orderNumber}
-👤 *Customer:* ${orderData.customerName}
-📞 *Phone:* ${orderData.customerPhone}
-📍 *Address:* ${orderData.address}
-━━━━━━━━━━━━━━━━━━━━
-🛒 *Product:* ${orderData.productName}
-💰 *Price:* ₹${orderData.total}
-💳 *Payment:* ${orderData.paymentMethod}
-━━━━━━━━━━━━━━━━━━━━
-⏰ *Time:* ${new Date().toLocaleString()}
-
-🙏 *Thank you for your order!*`;
-
-    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-    
-    try {
-      const response = await fetch(url);
-      const result = await response.json();
-      if (result.ok) {
-        console.log("✅ Telegram notification sent!");
-        return true;
-      } else {
-        console.log("❌ Telegram error:", result);
-        return false;
-      }
-    } catch(error) {
-      console.log("❌ Telegram send failed:", error);
-      return false;
-    }
+  // UPI Payment Function
+  function payViaUPI(amount, orderId) {
+    const note = `Order ${orderId} - Oxervel`;
+    const upiUrl = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+    window.location.href = upiUrl;
   }
 
-  // ========== SAVE TO GOOGLE SHEETS ==========
+  // Telegram notification
+  async function sendTelegramNotification(orderData) {
+    const message = `🆕 *NEW ORDER* 🛍️\n\n▫️ *Order ID:* ${orderData.orderNumber}\n▫️ *Customer:* ${orderData.customerName}\n▫️ *Phone:* ${orderData.customerPhone}\n▫️ *Address:* ${orderData.address}\n▫️ *Product:* ${orderData.productName}\n▫️ *Total:* ₹${orderData.total}\n▫️ *Payment:* ${orderData.paymentMethod}\n▫️ *Time:* ${new Date().toLocaleString()}\n\n🙏 Thank you!`;
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+    try { await fetch(url); console.log("✅ Telegram sent"); } catch(e) { console.log("❌ Telegram error"); }
+  }
+
+  // Save to Google Sheets
   async function saveToGoogleSheets(orderData) {
     const data = {
       orderId: orderData.orderNumber,
@@ -393,23 +453,13 @@
       total: orderData.total,
       paymentMethod: orderData.paymentMethod
     };
-    
     try {
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      });
-      console.log("✅ Order saved to Google Sheets!");
-      return true;
-    } catch(error) {
-      console.log("❌ Google Sheets error:", error);
-      return false;
-    }
+      await fetch(GOOGLE_SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
+      console.log("✅ Saved to Google Sheets");
+    } catch(e) { console.log("❌ Google Sheets error"); }
   }
 
-  // ========== SAVE TO LOCAL STORAGE (sheetrecord.html) ==========
+  // Save to Local Storage
   function saveToLocalStorage(orderData) {
     const record = {
       orderId: orderData.orderNumber,
@@ -424,38 +474,29 @@
       status: "Processing",
       dateTime: new Date().toLocaleString()
     };
-    
     const existing = localStorage.getItem('oxervel_orders');
     let orders = existing ? JSON.parse(existing) : [];
     orders.unshift({ ...record, id: Date.now() });
     localStorage.setItem('oxervel_orders', JSON.stringify(orders));
     localStorage.setItem('pendingOrderRecord', JSON.stringify(record));
-    
-    console.log("✅ Order saved to Local Storage!");
-    return true;
+    console.log("✅ Saved to Local Storage");
   }
 
-  // ========== SHOW TOAST ==========
-  function showToast(message) {
+  function showToast(msg) {
     let toast = document.getElementById('toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'toast';
-      document.body.appendChild(toast);
-    }
-    toast.innerText = message;
+    if (!toast) { toast = document.createElement('div'); toast.id = 'toast'; document.body.appendChild(toast); }
+    toast.innerText = msg;
     toast.style.display = 'block';
-    setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    setTimeout(() => toast.style.display = 'none', 2000);
   }
 
-  // ========== LOAD PRODUCT DETAILS ==========
-  let selectedProduct = { name: "Finora Floor Cleaner", price: 129 };
-
+  // Load product details
+  let selectedProduct = { name: "Oxervel Floor Cleaner", price: 129 };
   try {
     const checkoutProduct = localStorage.getItem('checkoutProduct');
     if (checkoutProduct) {
       const productData = JSON.parse(checkoutProduct);
-      selectedProduct.name = productData.name || "Finora Floor Cleaner";
+      selectedProduct.name = productData.name || "Oxervel Floor Cleaner";
       selectedProduct.price = parseInt(productData.price) || 129;
     }
   } catch(e) {}
@@ -465,21 +506,45 @@
   document.getElementById('subtotal').innerText = `₹${selectedProduct.price}`;
   document.getElementById('grandTotal').innerText = `₹${selectedProduct.price}`;
 
-  // Payment method selection
+  // Payment selection
   const paymentOptions = document.querySelectorAll('.payment-option');
+  const upiPayBtn = document.getElementById('upiPayBtn');
+  const confirmBtn = document.getElementById('confirmOrderBtn');
+
   paymentOptions.forEach(option => {
     const radio = option.querySelector('input[type="radio"]');
     option.addEventListener('click', () => {
       paymentOptions.forEach(opt => opt.classList.remove('selected'));
       option.classList.add('selected');
       radio.checked = true;
+      
+      // Show/hide UPI pay button
+      if (radio.value.includes('UPI')) {
+        upiPayBtn.style.display = 'flex';
+      } else {
+        upiPayBtn.style.display = 'none';
+      }
     });
-    if (radio.checked) option.classList.add('selected');
+    if (radio.checked) {
+      option.classList.add('selected');
+      if (radio.value.includes('UPI')) upiPayBtn.style.display = 'flex';
+    }
   });
-  document.getElementById('upi').checked = true;
-  document.querySelector('[data-method="upi"]').classList.add('selected');
 
-  // ========== CONFIRM ORDER ==========
+  // Set default COD selected
+  document.getElementById('cod').checked = true;
+  document.querySelector('[data-method="cod"]').classList.add('selected');
+  upiPayBtn.style.display = 'none';
+
+  // UPI Pay Button Click
+  upiPayBtn.addEventListener('click', () => {
+    const amount = selectedProduct.price;
+    const orderId = `OX${Date.now()}`;
+    payViaUPI(amount, orderId);
+    showToast(`Opening UPI app... Please pay ₹${amount}`);
+  });
+
+  // Confirm Order
   document.getElementById('confirmOrderBtn').addEventListener('click', async () => {
     const fullName = document.getElementById('fullName').value.trim();
     const phone = document.getElementById('phone').value.trim();
@@ -496,11 +561,10 @@
 
     const orderData = {
       id: `ORD-${Date.now()}`,
-      orderNumber: `FIN${Math.floor(Math.random() * 100000)}`,
+      orderNumber: `OX${Math.floor(Math.random() * 100000)}`,
       date: new Date().toISOString(),
       total: selectedProduct.price,
       status: "Processing",
-      itemsSummary: selectedProduct.name,
       productName: selectedProduct.name,
       paymentMethod: paymentMethod,
       address: address,
@@ -509,42 +573,27 @@
       customerEmail: email
     };
 
-    // Show loading
-    const btn = document.getElementById('confirmOrderBtn');
-    btn.innerText = "Processing...";
-    btn.disabled = true;
-
-    try {
-      // 1. Save to Local Storage
-      saveToLocalStorage(orderData);
-      
-      // 2. Send Telegram Notification
-      await sendTelegramNotification(orderData);
-      
-      // 3. Save to Google Sheets
-      await saveToGoogleSheets(orderData);
-      
-      // 4. Save to account.html (if available)
-      if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
-        window.FinoraAPI.addOrder(orderData);
-      }
-      
-      // 5. Cleanup
-      localStorage.removeItem('checkoutProduct');
-      localStorage.removeItem('pendingOrder');
-      
-      showToast(`✅ Order Confirmed! ID: ${orderData.orderNumber}`);
-      
-      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n📱 Telegram notification sent!\n📊 Saved to Google Sheets!\n📝 Saved to Local Records!\n\nYour order will be delivered within 3-5 business days.`);
-      
-      window.location.href = 'account.html';
-    } catch(error) {
-      console.error("Order error:", error);
-      alert("Order placed but there was an issue. Please contact support.");
-      btn.innerText = "Confirm Order";
-      btn.disabled = false;
+    saveToLocalStorage(orderData);
+    await sendTelegramNotification(orderData);
+    await saveToGoogleSheets(orderData);
+    
+    if (window.FinoraAPI && typeof window.FinoraAPI.addOrder === 'function') {
+      window.FinoraAPI.addOrder(orderData);
     }
+    
+    localStorage.removeItem('checkoutProduct');
+    localStorage.removeItem('pendingOrder');
+    
+    showToast(`Order confirmed • ${orderData.orderNumber}`);
+    
+    if (paymentMethod.includes('UPI')) {
+      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\n⚠️ IMPORTANT: Please complete UPI payment using the app.\n\nYour order will be processed after payment confirmation.\n\nYour order will be delivered within 3-5 business days.`);
+    } else {
+      alert(`✅ ORDER CONFIRMED!\n\nOrder ID: ${orderData.orderNumber}\nProduct: ${selectedProduct.name}\nTotal: ₹${selectedProduct.price}\nPayment: ${paymentMethod}\n\nYour order will be delivered within 3-5 business days.\n\nPay ₹${selectedProduct.price} at delivery.`);
+    }
+    
+    window.location.href = 'account.html';
   });
 </script>
 </body>
-</html>
+  </html>
